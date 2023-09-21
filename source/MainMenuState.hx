@@ -88,12 +88,12 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var dlcshit:FlxText = new FlxText(5, FlxG.height - 60, 0, "PRESS 7 TO GO INTO THE DLC MENU", 12);
+		var dlcshit:FlxText = new FlxText(5, FlxG.height - 46, 0, "PRESS 7 TO GO INTO THE DLC MENU", 12);
 		dlcshit.scrollFactor.set();
 		dlcshit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(dlcshit);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Funkin' Remastered v1.0", 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Funkin' Remastered v1.0 by Team Remastered", 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -131,6 +131,17 @@ class MainMenuState extends MusicBeatState
 			if (controls.BACK)
 			{
 				FlxG.switchState(new TitleState());
+			}
+
+			if(FlxG.keys.pressed.SEVEN)
+			{
+				#if desktop
+				FlxG.switchState(new DLCState());
+				trace("DLC Menu Selected");		
+				#else
+				FlxG.switchState(new DLCWebState());
+				trace("User is on web so no dlc.");	
+				#end			
 			}
 
 			if (controls.ACCEPT)
