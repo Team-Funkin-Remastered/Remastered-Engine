@@ -3,6 +3,8 @@ package;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
+import flixel.FlxBasic;
+import flixel.FlxSprite;
 
 class MusicBeatSubstate extends FlxSubState
 {
@@ -20,15 +22,6 @@ class MusicBeatSubstate extends FlxSubState
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
-
-	override function create()
-	{
-		#if (!web)
-		TitleState.soundExt = '.ogg';
-		#end
-
-		super.create();
-	}
 
 	override function update(elapsed:Float)
 	{
