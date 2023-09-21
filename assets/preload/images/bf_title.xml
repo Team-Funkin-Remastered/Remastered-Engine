@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf_title.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="bf title0000" x="0" y="1149" width="1234" height="1155" frameX="-13" frameY="-127" frameWidth="1280" frameHeight="1280"/>
+	<SubTexture name="bf title0001" x="1246" y="0" width="1249" height="1146" frameX="2" frameY="-136" frameWidth="1280" frameHeight="1280"/>
+	<SubTexture name="bf title0002" x="0" y="0" width="1246" height="1149" frameX="-1" frameY="-133" frameWidth="1280" frameHeight="1280"/>
+	<SubTexture name="bf title0003" x="1234" y="1149" width="1237" height="1152" frameX="-10" frameY="-130" frameWidth="1280" frameHeight="1280"/>
+</TextureAtlas>
