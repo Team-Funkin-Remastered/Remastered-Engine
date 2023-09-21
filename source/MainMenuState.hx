@@ -23,7 +23,7 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	#if !switch
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate'];
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
 	#else
 	var optionShit:Array<String> = ['story mode', 'freeplay'];
 	#end
@@ -88,7 +88,12 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "v" + Application.current.meta.get('version'), 12);
+		var dlcshit:FlxText = new FlxText(5, FlxG.height - 60, 0, "PRESS 7 TO GO INTO THE DLC MENU", 12);
+		dlcshit.scrollFactor.set();
+		dlcshit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(dlcshit);
+
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Funkin' Remastered v1.0", 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -172,7 +177,6 @@ class MainMenuState extends MusicBeatState
 										FlxG.switchState(new FreeplayState());
 
 										trace("Freeplay Menu Selected");
-
 									case 'options':
 										FlxG.switchState(new OptionsMenu());
 								}
