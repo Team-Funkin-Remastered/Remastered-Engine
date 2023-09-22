@@ -30,7 +30,6 @@ class PauseSubState extends MusicBeatSubstate
 	var skipTimeTracker:Alphabet;
 	var curTime:Float = Math.max(0, Conductor.songPosition);
 	//var botplayText:FlxText;
-	var laneunderlayThing:FlxText;
 
 	public static var songName:String = '';
 
@@ -104,21 +103,6 @@ class PauseSubState extends MusicBeatSubstate
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(blueballedTxt, {alpha: 1, y: blueballedTxt.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
 
-		var funnytxts:Array<String> = FlxG.random.getObject(PlayState.instance.introText);
-		var funnyThing:FlxText = new FlxText(5, 38, 0, funnytxts[0], 12);
-		funnyThing.scrollFactor.set();
-		funnyThing.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(funnyThing);
-		var funnyThing1:FlxText = new FlxText(5, 58, 0, funnytxts[1], 12);
-		funnyThing1.scrollFactor.set();
-		funnyThing1.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(funnyThing1);
-
-		laneunderlayThing = new FlxText(5, 78, 0, "Lane Underlay (Press SHIFT and Left or Right): " + ClientPrefs.laneUnderlay + "%", 12);
-		laneunderlayThing.scrollFactor.set();
-		laneunderlayThing.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(laneunderlayThing);
-
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
 
@@ -154,33 +138,17 @@ class PauseSubState extends MusicBeatSubstate
 			if (controls.UI_LEFT_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-				ClientPrefs.laneUnderlay -= 5;
 				holdTime = 0;
-				laneunderlayThing.text = "Lane Underlay (Press SHIFT and Left or Right): " + ClientPrefs.laneUnderlay + "%";
-				PlayState.instance.laneunderlay.alpha = ClientPrefs.laneUnderlay;
-				PlayState.instance.laneunderlayOpponent.alpha = ClientPrefs.laneUnderlay;
 			}
 			if (controls.UI_RIGHT_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-				ClientPrefs.laneUnderlay += 5;
 				holdTime = 0;
-				laneunderlayThing.text = "Lane Underlay (Press SHIFT and Left or Right): " + ClientPrefs.laneUnderlay + "%";
-				PlayState.instance.laneunderlay.alpha = ClientPrefs.laneUnderlay;
-				PlayState.instance.laneunderlayOpponent.alpha = ClientPrefs.laneUnderlay;
 			}
 
 			if(controls.UI_LEFT || controls.UI_RIGHT)
 			{
 				holdTime += elapsed;
-				if(holdTime > 0.5)
-					ClientPrefs.laneUnderlay += (controls.UI_LEFT ? -1 : 1);
-
-				if (ClientPrefs.laneUnderlay > 100) ClientPrefs.laneUnderlay = 100;
-				else if (ClientPrefs.laneUnderlay < 0) ClientPrefs.laneUnderlay = 0;
-				laneunderlayThing.text = "Lane Underlay (Press SHIFT and Left or Right): " + ClientPrefs.laneUnderlay + "%";
-				PlayState.instance.laneunderlay.alpha = ClientPrefs.laneUnderlay / 100;
-				PlayState.instance.laneunderlayOpponent.alpha = ClientPrefs.laneUnderlay / 100;
 			}
 		}
 		else

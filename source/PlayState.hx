@@ -137,9 +137,6 @@ class PlayState extends MusicBeatState
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
 
-	public var laneunderlay:FlxSprite;
-	public var laneunderlayOpponent:FlxSprite;
-
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
 	public var playerStrums:FlxTypedGroup<StrumNote>;
@@ -908,18 +905,6 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 
-		laneunderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2, FlxColor.BLACK);
-		laneunderlayOpponent.alpha = ClientPrefs.laneUnderlay / 100;
-		laneunderlayOpponent.scrollFactor.set();
-
-		laneunderlay = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2, FlxColor.BLACK);
-		laneunderlay.alpha = ClientPrefs.laneUnderlay / 100;
-		laneunderlay.scrollFactor.set();
-
-		if (!ClientPrefs.middleScroll)
-			add(laneunderlayOpponent);
-		add(laneunderlay);
-
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1097,8 +1082,6 @@ class PlayState extends MusicBeatState
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
-		laneunderlay.cameras = [camHUD];
-		laneunderlayOpponent.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
@@ -1577,7 +1560,6 @@ class PlayState extends MusicBeatState
 
 			generateStaticArrows(0);
 			generateStaticArrows(1);
-			updateLaneUnderlay();
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
@@ -1717,33 +1699,6 @@ class PlayState extends MusicBeatState
 				// generateSong('fresh');
 			}, 5);
 		}
-	}
-
-	public function updateLaneUnderlay()
-	{
-		var LU_X:Array<Array<Float>> = [ // scale, offset for X pos lane underlay
-			[0.375, -150], // 1 key
-			[0.6, -89], // 2 key and etc
-			[0.825, -89],
-			[1, 0],
-			[1.1, 32],
-			[1.1, 38],
-			[1.2, 53],
-			[1.2, 60],
-			[1.2, 65],
-			[1.15, 47.5],
-			[1.15, 52.5]
-		];
-
-		laneunderlayOpponent.x = opponentStrums.members[0].x - 25 + LU_X[mania][1];
-		laneunderlayOpponent.scale.set(LU_X[mania][0], 1);
-		laneunderlayOpponent.screenCenter(Y);
-
-		laneunderlay.x = playerStrums.members[0].x - 25 + LU_X[mania][1];
-		laneunderlay.scale.set(LU_X[mania][0], 1);
-		laneunderlay.screenCenter(Y);
-
-		//trace('Updated lane underlay with: scaleX = ${scaleX[mania - 1]}, offsetX = ${offsetX[mania - 1]} | mania = ${mania}');
 	}
 
 	public function clearNotesBefore(time:Float)
@@ -2160,7 +2115,6 @@ class PlayState extends MusicBeatState
 
 		generateStaticArrows(0);
 		generateStaticArrows(1);
-		updateLaneUnderlay();
 	}
 
 	override function openSubState(SubState:FlxSubState)
