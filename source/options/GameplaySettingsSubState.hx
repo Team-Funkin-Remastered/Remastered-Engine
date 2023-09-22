@@ -49,13 +49,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Ghost Tapping',
-			"If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.",
-			'ghostTapping',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('No Antimash',	//even tho only one person asked, it here
 			"If checked, Antimash will be disabled.",
 			'noAntimash',

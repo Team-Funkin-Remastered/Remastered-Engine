@@ -246,10 +246,6 @@ class PlayState extends MusicBeatState
 	public var skipCountdown:Bool = false;
 	var songLength:Float = 0;
 
-	public var optionsWatermark:FlxText;
-	public var versionWatermark:FlxText;
-	public var songWatermark:FlxText;
-
 	public var boyfriendCameraOffset:Array<Float> = null;
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
@@ -1081,24 +1077,6 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		reloadHealthBarColors();
 
-		// Add watermarks from KE, i fucking hate that PsychE does not have it lol
-
-		optionsWatermark = new FlxText(4, FlxG.height * 0.91 + 11, 0,
-			(ClientPrefs.ghostTapping ? "GhosTap | " : "") +
-			(ClientPrefs.noAntimash ? "Mash | " : "") +
-			"Spd " + FlxMath.roundDecimal(songSpeed, 2)
-		);
-		versionWatermark = new FlxText(4, FlxG.height * 0.91 + 28, 0, "Funkin' Remastered v1.0 by Team Remastered!", 16);
-		songWatermark = new FlxText(4, FlxG.height * 0.91 + 45, 0, SONG.song + " - " + CoolUtil.difficultyString(), 16);
-
-		optionsWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		versionWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		songWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-
-		add(optionsWatermark);
-		add(versionWatermark);
-		add(songWatermark);
-
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
@@ -1131,9 +1109,6 @@ class PlayState extends MusicBeatState
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
-		optionsWatermark.cameras = [camHUD];
-		versionWatermark.cameras = [camHUD];
-		songWatermark.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -3203,7 +3178,6 @@ class PlayState extends MusicBeatState
 				if(val2 <= 0)
 				{
 					songSpeed = newValue;
-					optionsWatermark.text = (ClientPrefs.ghostTapping ? "GhosTap | " : "") + (ClientPrefs.noAntimash ? "Mash | " : "") + FlxMath.roundDecimal(songSpeed, 2);
 				}
 				else
 				{
@@ -3211,11 +3185,10 @@ class PlayState extends MusicBeatState
 						function (twn:FlxTween)
 						{
 							songSpeedTween = null;
-							optionsWatermark.text = (ClientPrefs.ghostTapping ? "GhosTap | " : "") + (ClientPrefs.noAntimash ? "Mash | " : "") + FlxMath.roundDecimal(songSpeed, 2);
 						},
 						onUpdate: function (twn:FlxTween)
 						{
-							optionsWatermark.text = (ClientPrefs.ghostTapping ? "GhosTap | " : "") + (ClientPrefs.noAntimash ? "Mash | " : "") + FlxMath.roundDecimal(songSpeed, 2);
+							// a
 						}
 					});
 				}
@@ -3728,7 +3701,7 @@ class PlayState extends MusicBeatState
 				var lastTime:Float = Conductor.songPosition;
 				Conductor.songPosition = FlxG.sound.music.time;
 
-				var canMiss:Bool = !ClientPrefs.ghostTapping;
+				var canMiss:Bool = true;
 
 				// heavily based on my own code LOL if it aint broke dont fix it
 				var pressNotes:Array<Note> = [];
@@ -3941,8 +3914,6 @@ class PlayState extends MusicBeatState
 				vocals.volume = 0;
 				doDeathCheck(true);
 			}
-
-			if(ClientPrefs.ghostTapping) return;
 
 			if (combo > 5 && gf != null && gf.animOffsets.exists('sad'))
 			{

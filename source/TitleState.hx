@@ -576,9 +576,9 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 0:
-					createCoolText(['Remastered Engine By']);
+					createCoolText(['']);	
 				case 1:
-					addMoreText('BlitzEX', 15);
+					addMoreText('Team Remastered!', 15);
 				case 3:
 					deleteCoolText();	
 				case 4:
